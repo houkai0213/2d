@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下雨</title>
+</head>
+<body>
+<script>
+    window.onload=function () {
+        var w=document.documentElement.clientWidth;
+        var h=document.documentElement.clientHeight;
+        var arr=[];
+        var speed=2;
+        setInterval(function () {
+            document.body.style.transition="transform 2s Linear";
+            speed+=2;
+            document.body.style.transform="rotate("+(Math.sin(Math.PI/180*speed)*15)+"deg)";
+            document.body.style.transformOrigin="content";
+        },50);
+        for(var i=0;i<300;i++){
+            var div=document.createElement("div");
+            div.style.cssText="width:2px;height:6px;position:absolute;top:-150px;left:"+(50+(w-100)*Math.random())+"px;background:black;transition:transform 2s linear "+3*Math.random()+"s";
+            arr.push(div);
+
+            setTimeout(function () {
+                for (var j=0;j<arr.length;j++){
+                    arr[j].style.transform="translateY("+h+"px)";
+
+                    arr[j].addEventListener("webkitTransitionEnd",function () {
+                        this.style.transition="none";
+                        this.style.transform="translateY(0)";
+                        var that=this;
+                        setTimeout(function () {
+                            that.style.transition="transform 2s linear "+3*Math.random()+"s";
+                            that.style.transform="translateY("+h+"px)";
+                        })
+                    })
+                }
+            },0);
+            document.body.appendChild(div);
+        }
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .clock{
+            position: relative;
+            margin: 100px auto;
+            left:0;top:0;right: 0;bottom: 0;
+            width: 200px;
+            height: 200px;
+            border:4px solid #000;
+            border-radius: 50%;
+            background: linear-gradient(30deg, rgba(44, 167, 27,.1), rgb(132, 80, 195), rgb(255, 59, 36));
+            /*transition: width 2s ease ,transform 2s ease;*/
+            /*transform-origin: 0px 0px;*/
+
+        }
+        /*div:hover{*/
+            /*transform: matrix(0.2,0,0,0.2,100,100);*/
+        /*}*/
+    </style>
+    <script src="iphone/js/jquery.js"></script>
+    <script>
+        window.onload=function () {
+
+            function biao() {
+                var clock=document.querySelector(".clock");
+                var widths,heights;
+                for(var i=0;i<60;i++){
+                    if(i%5==0){
+                        widths=4;
+                        heights=16;
+                    }else {
+                        widths=4;
+                        heights=8;
+
+                    }
+                    var div=document.createElement("div");
+                    div.style.cssText="position:absolute;left:"+(200-widths)/2+"px";
+                    div.style.width=widths+"px";
+                    div.style.height=heights+"px";
+                    div.style.backgroundColor="#000";
+                    div.style.transformOrigin=widths/2+"px 100px";
+                    div.style.transform="rotate("+i*6+"deg)";
+                    clock.appendChild(div);
+                }
+            }
+            biao();
+
+            function SFM(w,h,c,a) {
+                var clock=document.querySelector(".clock");
+
+                    var div=document.createElement("div");
+                    div.style.cssText="position:absolute;left:"+(200-w)/2+"px;top:"+(100-h)+"px";
+                    div.style.width=w+"px";
+                    div.style.height=h+"px";
+                    div.style.backgroundColor=c;
+                    div.style.transformOrigin="center bottom";
+                    clock.appendChild(div);
+                    return div;
+            }
+//创建表针
+            var shizhen=SFM(6,40,"#fff",0);
+            var fen=SFM(4,60,"#fff",0);
+            var miao=SFM(2,80,"red",0);
+//获取时间
+            var date=new Date();
+            var houseA=date.getHours();
+            var mainA=date.getMinutes();
+            var secA=date.getSeconds();
+
+            shizhen.style.transform="rotate("+(houseA*30+mainA*6/12)+"deg)";
+            fen.style.transform="rotate("+mainA*6+"deg)";
+            miao.style.transform="rotate("+secA*6+"deg)";
+
+            setInterval(function () {
+                var date=new Date();
+                var houseA=date.getHours();
+                var mainA=date.getMinutes();
+                var secA=date.getSeconds();
+
+                shizhen.style.transform="rotate("+(houseA*30+mainA*6/12)+"deg)";
+                fen.style.transform="rotate("+mainA*6+"deg)";
+                miao.style.transform="rotate("+secA*6+"deg)";
+            },1000)
+
+
+
+        }
+    </script>
+</head>
+<body>
+    <div class="clock"></div>
+</body>
+</html>
